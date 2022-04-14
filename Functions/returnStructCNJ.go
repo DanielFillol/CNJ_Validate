@@ -4,7 +4,6 @@ import (
 	"errors"
 	"github.com/Darklabel91/CNJ_Validate/Database"
 	"github.com/Darklabel91/CNJ_Validate/Structs"
-	"strings"
 )
 
 func ReturnStructCNJ(cnj string) (Structs.CNJNumber, error) {
@@ -73,8 +72,8 @@ func matchDatabase(semiCNJ string) (string, string) {
 	uf := ""
 
 	for i := 0; i < len(db); i++ {
-		if strings.Contains(db[i].SemiCNJ, semiCNJ) {
-			district = db[i].District
+		if semiCNJ == db[i].SemiCNJ {
+			district = db[i].SourceUnit
 			uf = db[i].UF
 		}
 	}

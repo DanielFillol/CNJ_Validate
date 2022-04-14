@@ -40,7 +40,7 @@ func SourceUnit(cnj string) (string, string, error) {
 		text1 = "auditoria militar"
 		text2 = su
 	} else if sg == 8 {
-		text1 = "foro de tramitação"
+		text1 = "foro"
 		text2 = su
 	} else {
 		err = errors.New("invalid cnj number, this segment does not exist")

@@ -2,11 +2,18 @@ package CNJ_Validate
 
 import (
 	"errors"
+	"fmt"
+	"github.com/Darklabel91/CNJ_Validate/CSV"
 	"github.com/Darklabel91/CNJ_Validate/Error"
 	"github.com/Darklabel91/CNJ_Validate/Functions"
 	"github.com/Darklabel91/CNJ_Validate/Structs"
-	"strconv"
 )
+
+func AnalyzeCNJCSV(rawFilePath string, separator rune, nameResultFolder string) {
+	raw := CSV.ReadCsvFile(rawFilePath, separator)
+	createCSVs(raw, nameResultFolder)
+	fmt.Println("Files created")
+}
 
 func AnalyzeCNJ(cnj string) (Structs.AnalysisCNJ, error) {
 	var err error
@@ -50,8 +57,23 @@ func AnalyzeCNJ(cnj string) (Structs.AnalysisCNJ, error) {
 
 }
 
+func createCSVs(raw []string, nameResultFolder string) {
+	var analyzeCNJCSV []Structs.AnalysisCNJ
+
+	for i := 0; i < len(raw); i++ {
+		dataReturn, err := AnalyzeCNJ(raw[i])
+		Error.CheckError(err)
+		analyzeCNJCSV = append(analyzeCNJCSV, dataReturn)
+	}
+
+	CSV.ExportCSV("filesOK", nameResultFolder, analyzeCNJCSV)
+
+}
+
 func CNJWrite(number Structs.AnalysisCNJ) string {
-	var preposition string
+	var preposition2 string
+	var sourceU2 string
+	var ct2 string
 	var text string
 
 	lawsuit := number.Detailed.LawsuitNumber
@@ -59,19 +81,27 @@ func CNJWrite(number Structs.AnalysisCNJ) string {
 	segment1 := number.Segment1
 	segment2 := number.Segment2
 	sourceU1 := number.SourceUnit1
-	sourceU2 := number.Detailed.District
 	ct1 := number.Court1
-	ct2 := number.Detailed.UF
 
-	sg, err1 := strconv.Atoi(number.Detailed.Segment)
-	Error.CheckError(err1)
-
-	if sg < 3 {
-		preposition = "do"
+	if number.Detailed.District != "" {
+		sourceU2 = number.Detailed.District
 	} else {
-		preposition = "da"
+		sourceU2 = number.SourceUnit2
 	}
 
-	text = "Processo número: " + lawsuit + ", ajuizado no ano de " + year + ", pertencente ao segmento " + preposition + " " + segment1 + " (" + segment2 + "), tendo como unidade de origem: " + sourceU1 + " de " + sourceU2 + " | " + ct1 + ": " + ct2
+	if number.Detailed.UF != "" {
+		ct2 = number.Detailed.UF
+	} else {
+		ct2 = number.Court2
+	}
+
+	if number.Detailed.SourceUnit != "8" {
+		preposition2 = "o"
+	} else {
+		preposition2 = "a"
+	}
+
+	text = "Processo número: " + lawsuit + ", protocolado n" + preposition2 + " " + sourceU1 + " de " + sourceU2 + ", no ano " + year + " | " + ct1 + ": " + ct2 + " | " + segment1 + " (" + segment2 + ")"
+
 	return text
 }
