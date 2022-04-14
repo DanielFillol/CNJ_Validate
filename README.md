@@ -33,40 +33,47 @@ import (
 
 func main() {
 
-	cnj := "1004144-88.2020.8.01.0037"
+	cnj := "0001327-64.2018.8.26.0158"
 
 	//Returns true if the CNJ is valid and the validation digit that it should have
-	bCNJ, nvd := Functions.ValidateCNJ(cnj)
+	bCNJ, _ := Functions.ValidateCNJ(cnj)
+	fmt.Println(bCNJ)
 
 	//Returns the valid CNJ in string format
 	vCNJ := Functions.ReturnValidCNJ(cnj)
+	fmt.Println(vCNJ)
 
-	//Returns a complex struct "AnalysisCNJ" with all the data in CNJ format
-	//returns error if any step of the verification is faulted
+	//Returns a complex struct "AnalysisCNJ" with all the data in CNJ format ; returns error if any step of the verification is faulted
 	aCNJ, err := CNJ_Validate.AnalyzeCNJ(cnj)
 	Error.CheckError(err)
+	fmt.Println(aCNJ)
 
 	//Returns an organized string of all cnj attributes
 	cnjW := CNJ_Validate.CNJWrite(aCNJ)
-
-	fmt.Println("O CNJ existe?", bCNJ)
-	fmt.Println("O dígito verificador correto:", nvd)
-	fmt.Println("O CNJ correto seria:", vCNJ)
-	fmt.Println("O cnj analisado:", aCNJ)
-	
 	fmt.Println(cnjW)
-	
+
+	//Returns a CSV File with the structured cnj analysis
+	raw := "/Users/Desktop/test.csv"
+	sp := ','
+	resultF := "TestFolder"
+
+	CNJ_Validate.AnalyzeCNJCSV(raw, sp, resultF)
+
 }
+
 
  ```
  Output
  ``` 
-O CNJ existe? false
-O dígito verificador correto: 84
-O CNJ correto seria: 1004144-84.2020.8.01.0037
-O cnj analisado: {1004144-88.2020.8.01.0037 false 1004144-84.2020.8.01.0037 84 Justiça dos Estados e do Distrito Federal e Territórios Justiça Comum foro de tramitação 0037 unidade federativa 1 {1004144 88 2020 8 01 0037 10041442020801003700}}
+true
 
-Processo número: 1004144, ajuizado no ano de 2020, pertencente ao segmento da Justiça dos Estados e do Distrito Federal e Territórios (Justiça Comum), tendo como unidade de origem: foro de tramitação: 0037 | unidade federativa: 1
+0001327-64.2018.8.26.0158
+
+{0001327-64.2018.8.26.0158 true 0001327-64.2018.8.26.0158 64 Justiça dos Estados e do Distrito Federal e Territórios Justiça Comum foro 0158 unidade federativa 26 {0001327 64 2018 8 26 0158 00013272018826015800 São Paulo São Paulo}}
+
+Processo número: 0001327, protocolado no foro de São Paulo, no ano 2018 | unidade federativa: São Paulo | Justiça dos Estados e do Distrito Federal e Territórios (Justiça Comum)
+
+Files created
  ```
  
  ## Functions
