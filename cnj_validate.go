@@ -2,7 +2,6 @@ package CNJ_Validate
 
 import (
 	"errors"
-	"fmt"
 	"github.com/Darklabel91/CNJ_Validate/Error"
 	"github.com/Darklabel91/CNJ_Validate/Functions"
 	"github.com/Darklabel91/CNJ_Validate/Structs"
@@ -53,7 +52,7 @@ func AnalyzeCNJ(cnj string) (Structs.AnalysisCNJ, error) {
 
 func CNJWrite(number Structs.AnalysisCNJ) string {
 	var preposition string
-	var text
+	var text string
 
 	lawsuit := number.Detailed.LawsuitNumber
 	year := number.Detailed.ProtocolYear
@@ -73,6 +72,6 @@ func CNJWrite(number Structs.AnalysisCNJ) string {
 		preposition = "da"
 	}
 
-	text := "Processo número: " + lawsuit + ", ajuizado no ano de " + year + ", pertencente ao segmento " + preposition + " " + segment1 + " (" + segment2 + "), tendo como unidade de origem: " + sourceU1 + ": " + sourceU2 + " | " + ct1 + ": " + ct2
+	text = "Processo número: " + lawsuit + ", ajuizado no ano de " + year + ", pertencente ao segmento " + preposition + " " + segment1 + " (" + segment2 + "), tendo como unidade de origem: " + sourceU1 + ": " + sourceU2 + " | " + ct1 + ": " + ct2
 	return text
 }
