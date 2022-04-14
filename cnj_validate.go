@@ -31,7 +31,7 @@ func AnalyzeCNJ(cnj string) (Structs.AnalysisCNJ, error) {
 			err = errors.New("cnj is invalid with the given origin court")
 		}
 		if err3 != nil {
-			errors.New("CNJ out of format, it must have 25 or 20 char")
+			err = errors.New("CNJ out of format, it must have 25 or 20 char")
 		}
 	}
 
