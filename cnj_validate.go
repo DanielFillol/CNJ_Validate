@@ -51,8 +51,9 @@ func AnalyzeCNJ(cnj string) (Structs.AnalysisCNJ, error) {
 
 }
 
-func CNJWrite(number Structs.AnalysisCNJ) {
+func CNJWrite(number Structs.AnalysisCNJ) string {
 	var preposition string
+	var text
 
 	lawsuit := number.Detailed.LawsuitNumber
 	year := number.Detailed.ProtocolYear
@@ -72,5 +73,6 @@ func CNJWrite(number Structs.AnalysisCNJ) {
 		preposition = "da"
 	}
 
-	fmt.Println("Processo número: " + lawsuit + ", ajuizado no ano de " + year + ", pertencente ao segmento " + preposition + " " + segment1 + " (" + segment2 + "), tendo como unidade de origem: " + sourceU1 + ": " + sourceU2 + " | " + ct1 + ": " + ct2)
+	text := "Processo número: " + lawsuit + ", ajuizado no ano de " + year + ", pertencente ao segmento " + preposition + " " + segment1 + " (" + segment2 + "), tendo como unidade de origem: " + sourceU1 + ": " + sourceU2 + " | " + ct1 + ": " + ct2
+	return text
 }
