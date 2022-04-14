@@ -23,7 +23,8 @@ func main() {
 	//Returns the valid CNJ in string format
 	vCNJ := Functions.ReturnValidCNJ(cnj)
 
-	//Returns a complex struct "AnalysisCNJ" with all the data in CNJ format; returns error if any step of the verification is faulted
+	//Returns a complex struct "AnalysisCNJ" with all the data in CNJ format
+	//returns error if any step of the verification is faulted
 	aCNJ, err := CNJ_Validate.AnalyzeCNJ(cnj)
 	Error.CheckError(err)
 
@@ -38,5 +39,13 @@ func main() {
 	
 }
 
+ ```
+ Output
+ ``` 
+O CNJ existe? false
+O dígito verificador correto: 84
+O CNJ correto seria: 1004144-84.2020.8.01.0037
+O cnj analisado: {1004144-88.2020.8.01.0037 false 1004144-84.2020.8.01.0037 84 Justiça dos Estados e do Distrito Federal e Territórios Justiça Comum foro de tramitação 0037 unidade federativa 1 {1004144 88 2020 8 01 0037 10041442020801003700}}
+Processo número: 1004144, ajuizado no ano de 2020, pertencente ao segmento da Justiça dos Estados e do Distrito Federal e Territórios (Justiça Comum), tendo como unidade de origem: foro de tramitação: 0037 | unidade federativa: 1
  ```
 
