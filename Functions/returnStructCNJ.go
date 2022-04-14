@@ -2,7 +2,9 @@ package Functions
 
 import (
 	"errors"
+	"github.com/Darklabel91/CNJ_Validate/Database"
 	"github.com/Darklabel91/CNJ_Validate/Structs"
+	"strings"
 )
 
 func ReturnStructCNJ(cnj string) (Structs.CNJNumber, error) {
@@ -48,6 +50,9 @@ func ReturnStructCNJ(cnj string) (Structs.CNJNumber, error) {
 	}
 
 	args := lawsuitNumber + protocolYear + segment + court + sourceUnit + math
+	SemiCNJ := segment + "." + court + "." + sourceUnit
+
+	dt, uf := matchDatabase(SemiCNJ)
 
 	return Structs.CNJNumber{
 		LawsuitNumber:  lawsuitNumber,
@@ -57,5 +62,22 @@ func ReturnStructCNJ(cnj string) (Structs.CNJNumber, error) {
 		Court:          court,
 		SourceUnit:     sourceUnit,
 		ArgNumber:      args,
+		District:       dt,
+		UF:             uf,
 	}, err
+}
+
+func matchDatabase(semiCNJ string) (string, string) {
+	db := Database.ReturnDatabase()
+	district := ""
+	uf := ""
+
+	for i := 0; i < len(db); i++ {
+		if strings.Contains(db[i].SemiCNJ, semiCNJ) {
+			district = db[i].District
+			uf = db[i].UF
+		}
+	}
+
+	return district, uf
 }

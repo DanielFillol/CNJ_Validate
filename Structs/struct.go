@@ -8,6 +8,8 @@ type CNJNumber struct {
 	Court          string `json:"court,omitempty"`
 	SourceUnit     string `json:"source_unit,omitempty"`
 	ArgNumber      string `json:"arg_number,omitempty"`
+	District       string `json:"district,omitempty"`
+	UF             string `json:"UF,omitempty"`
 }
 
 type AnalysisCNJ struct {
@@ -22,4 +24,11 @@ type AnalysisCNJ struct {
 	Court1      string    `json:"court1,omitempty"`
 	Court2      string    `json:"court2,omitempty"`
 	Detailed    CNJNumber `json:"detailed"`
+}
+
+type CNJDistrict struct {
+	SemiCNJ    string `json:"semiCNJ,omitempty"`
+	SourceUnit string `json:"sourceUnit,omitempty"`
+	District   string `json:"district,omitempty"`
+	UF         string `json:"UF,omitempty"`
 }
