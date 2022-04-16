@@ -36,9 +36,9 @@ type CNJNumber struct {
 ```
 ### AnalysisCNJ
 - ReceivedCNJ: o cnj passado como parâmetro [0001327-64.2018.8.26.0158]
-- ValidCNJ: informa '''true''' caso o #ReceivedCNJ# tenha o dígito verificador como válido [true/false]
+- ValidCNJ: informa '''true''' caso o *ReceivedCNJ* tenha o dígito verificador como válido [true]
 - CorrectCNJ: informa o CNJ com o dígito verificador válido [0001327-64.2018.8.26.0158]
-- ValidDigit: informa o dígito verificador correto para o #ReceivedCNJ# [64]
+- ValidDigit: informa o dígito verificador correto para o *ReceivedCNJ* [64]
 - Segment1: informa o seguimento do ramo da justiça correspondente [Justiça dos Estados e do Distrito Federal e Territórios]
 - Segment2: informa a sigla do seguimento da justiça correspondente [Justiça Comum]
 - SourceUnit1: informa o tipo da unidade de origem [foro]
@@ -118,16 +118,16 @@ Files created
  ## Functions
 
 ### Main Function:
-- AnalyzeCNJ(cnj string) retorna a estrutura #AnalysisCNJ# necessitando apenas de um CNJ no formato #NNNNNNN-DD.AAAA.J.CT.0000# ou #NNNNNNNDDAAAAJCT0000# retorna erro caso qualquer uma das verificação seja inválida.
-- AnalyzeCNJCSV(rawFilePath string, separator rune, nameResultFolder string) retorna um CSV com a estrutura #AnalysisCNJ# necessitando do caminho onde está o arquivo para leitura (devendo ter apenas uma coluna com os números CNJ), o separador (','), e o nome da pasta em que os arquivos devem retornar
-- CNJWrite(number Structs.AnalysisCNJ) retorna uma frase para demostrar a organização das informações, necessita de um #AnalysisCNJ#
+- AnalyzeCNJ(cnj string) retorna a estrutura *AnalysisCNJ* necessitando apenas de um CNJ no formato *NNNNNNN-DD.AAAA.J.CT.0000* ou *NNNNNNNDDAAAAJCT0000* retorna erro caso qualquer uma das verificação seja inválida.
+- AnalyzeCNJCSV(rawFilePath string, separator rune, nameResultFolder string) retorna um CSV com a estrutura *AnalysisCNJ* necessitando do caminho onde está o arquivo para leitura (devendo ter apenas uma coluna com os números CNJ), o separador (','), e o nome da pasta em que os arquivos devem retornar
+- CNJWrite(number Structs.AnalysisCNJ) retorna uma frase para demostrar a organização das informações, necessita de um *AnalysisCNJ*
 
 ### Suport Functions:
-- ReturnStructCNJ(cnj string): retorna #Structs.CNJNumber#, retorna erro caso o cnj esteja fora do padrão
+- ReturnStructCNJ(cnj string): retorna *Structs.CNJNumber*, retorna erro caso o cnj esteja fora do padrão
 - OriginCourt(cnj string): retorna o Court1 e Court2, retorna erro caso a sequência seja inválida
 - Segment(cnj string): retorna o Segment1 e Segment2, retorna erro caso o a sequência seja inválida
 - SourceUnit(cnj string): retorna o SourceUnit1 e SourceUnit1, retorna erro caso a sequência seja inválida
-- ValidateCNJ(cnj string): retorna #true# caso o cnj sejá válido e o dígito verificador
+- ValidateCNJ(cnj string): retorna *true* caso o cnj sejá válido e o dígito verificador
 - ReturnValidCNJ(cnj string): retorna o CNJ com o dígito verificador correto
 - ValidVD(cnj string): retorna o dígito verificador correto
 
