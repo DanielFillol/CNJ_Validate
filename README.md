@@ -54,7 +54,7 @@ type CNJNumber struct {
 - Segment: J [8]
 - Court: CT [26]
 - SourceUnit: 0000 [0158]
-- ArgNumber:NNNNNNNAAAAJCT0000 [00013272018826015800]
+- ArgNumber:NNNNNNNAAAAJCT0000 + 00 [00013272018826015800] (utilizado pelo cálculo do *VerifyingDigit*)
 - District: o foro em que a ação foi protocolada (normalmente a cidade, zona eleitoral, vara trabalhista) [São Paulo]
 - UF: A unidade federativa que o foro em que a ação foi protocolada pertence [São Paulo] 
 
@@ -124,9 +124,9 @@ Files created
 
 ### Suport Functions:
 - ReturnStructCNJ(cnj string): retorna *Structs.CNJNumber*, retorna erro caso o cnj esteja fora do padrão
-- OriginCourt(cnj string): retorna o Court1 e Court2, retorna erro caso a sequência seja inválida
-- Segment(cnj string): retorna o Segment1 e Segment2, retorna erro caso o a sequência seja inválida
-- SourceUnit(cnj string): retorna o SourceUnit1 e SourceUnit1, retorna erro caso a sequência seja inválida
+- OriginCourt(cnj string): retorna o *Court1* e *Court2*, retorna erro caso a sequência seja inválida
+- Segment(cnj string): retorna o *Segment1* e *Segment2*, retorna erro caso o a sequência seja inválida
+- SourceUnit(cnj string): retorna o *SourceUnit1* e *SourceUnit2*, retorna erro caso a sequência seja inválida
 - ValidateCNJ(cnj string): retorna *true* caso o cnj sejá válido e o dígito verificador
 - ReturnValidCNJ(cnj string): retorna o CNJ com o dígito verificador correto
 - ValidVD(cnj string): retorna o dígito verificador correto
