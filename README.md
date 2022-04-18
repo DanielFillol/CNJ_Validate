@@ -118,7 +118,7 @@ Files created
  ## Functions
 
 ### Main Function:
-- AnalyzeCNJ(cnj string) retorna a estrutura *AnalysisCNJ* necessitando apenas de um CNJ no formato *NNNNNNN-DD.AAAA.J.CT.0000* ou *NNNNNNNDDAAAAJCT0000* retorna erro caso qualquer uma das verificação seja inválida.
+- AnalyzeCNJ(cnj string) retorna a estrutura *AnalysisCNJ* necessitando apenas de um CNJ no formato *NNNNNNN-DD.AAAA.J.CT.0000* ou *NNNNNNNDDAAAAJCT0000* retorna erro caso qualquer verificação seja inválida.
 - AnalyzeCNJCSV(rawFilePath string, separator rune, nameResultFolder string) retorna um CSV com a estrutura *AnalysisCNJ* necessitando do caminho onde está o arquivo para leitura (devendo ter apenas uma coluna com os números CNJ), o separador (','), e o nome da pasta em que os arquivos devem retornar
 - CNJWrite(number Structs.AnalysisCNJ) retorna uma frase para demostrar a organização das informações, necessita de um *AnalysisCNJ*
 
