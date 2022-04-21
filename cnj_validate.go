@@ -1,7 +1,6 @@
 package CNJ_Validate
 
 import (
-	"errors"
 	"fmt"
 	"github.com/Darklabel91/CNJ_Validate/CSV"
 	"github.com/Darklabel91/CNJ_Validate/Functions"
@@ -11,7 +10,7 @@ import (
 func AnalyzeCNJCSV(rawFilePath string, separator rune, nameResultFolder string) error {
 	raw, err := CSV.ReadCsvFile(rawFilePath, separator)
 	if err != nil {
-		return errors.New("CSV must have only one collum with cnj (without title)")
+		return err
 	}
 	err = createCSVs(raw, nameResultFolder)
 	if err != nil {
