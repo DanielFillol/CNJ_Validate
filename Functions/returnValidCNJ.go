@@ -1,7 +1,10 @@
 package Functions
 
 func ReturnValidCNJ(cnj string) (string, error) {
-	flag, nvd := ValidateCNJ(cnj)
+	flag, nvd, err := ValidateCNJ(cnj)
+	if err != nil {
+		return "", err
+	}
 
 	if flag == false {
 		nCNJ, err := ReturnStructCNJ(cnj)
