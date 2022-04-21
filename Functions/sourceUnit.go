@@ -2,22 +2,24 @@ package Functions
 
 import (
 	"errors"
-	"github.com/Darklabel91/CNJ_Validate/Error"
 	"strconv"
 )
 
 func SourceUnit(cnj string) (string, string, error) {
-	var err error
-	var text1 string
-	var text2 string
+	nCNJ, err := ReturnStructCNJ(cnj)
+	if err != nil {
+		return "", "", err
+	}
 
-	nCNJ, err0 := ReturnStructCNJ(cnj)
-	Error.CheckError(err0)
-
-	sg, err1 := strconv.Atoi(nCNJ.Segment)
-	Error.CheckError(err1)
+	sg, err := strconv.Atoi(nCNJ.Segment)
+	if err != nil {
+		return "", "", err
+	}
 
 	su := nCNJ.SourceUnit
+
+	var text1 string
+	var text2 string
 
 	if su == "0000" {
 		text1 = "competência originária"
@@ -43,8 +45,10 @@ func SourceUnit(cnj string) (string, string, error) {
 		text1 = "foro"
 		text2 = su
 	} else {
-		err = errors.New("invalid cnj number, this segment does not exist")
+		er := errors.New("invalid cnj number, this segment does not exist")
+		return "", "", er
+
 	}
 
-	return text1, text2, err
+	return text1, text2, nil
 }

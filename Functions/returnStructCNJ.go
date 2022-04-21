@@ -7,17 +7,12 @@ import (
 )
 
 func ReturnStructCNJ(cnj string) (Structs.CNJNumber, error) {
-	var err error
-
-	math := "00"
-	err = nil
-
-	lawsuitNumber := ""
-	verifyingDigit := ""
-	protocolYear := ""
-	segment := ""
-	court := ""
-	sourceUnit := ""
+	var lawsuitNumber string
+	var verifyingDigit string
+	var protocolYear string
+	var segment string
+	var court string
+	var sourceUnit string
 
 	if len(cnj) == 25 {
 		last17 := cnj[len(cnj)-17:]
@@ -45,10 +40,11 @@ func ReturnStructCNJ(cnj string) (Structs.CNJNumber, error) {
 		court = last6[0:2]
 		sourceUnit = cnj[len(cnj)-4:]
 	} else {
-		err = errors.New("CNJ out of format, it must have 25 or 20 char")
+		err := errors.New("CNJ out of format, it must have 25 or 20 char")
+		return Structs.CNJNumber{}, err
 	}
 
-	args := lawsuitNumber + protocolYear + segment + court + sourceUnit + math
+	args := lawsuitNumber + protocolYear + segment + court + sourceUnit + "00"
 	SemiCNJ := segment + "." + court + "." + sourceUnit
 
 	dt, uf := matchDatabase(SemiCNJ)
@@ -63,20 +59,17 @@ func ReturnStructCNJ(cnj string) (Structs.CNJNumber, error) {
 		ArgNumber:      args,
 		District:       dt,
 		UF:             uf,
-	}, err
+	}, nil
 }
 
 func matchDatabase(semiCNJ string) (string, string) {
 	db := Database.ReturnDatabase()
-	district := ""
-	uf := ""
 
-	for i := 0; i < len(db); i++ {
-		if semiCNJ == db[i].SemiCNJ {
-			district = db[i].SourceUnit
-			uf = db[i].UF
+	for _, cnj := range db {
+		if semiCNJ == cnj.SemiCNJ {
+			return cnj.SourceUnit, cnj.UF
 		}
 	}
 
-	return district, uf
+	return "", ""
 }

@@ -3,9 +3,7 @@ package Database
 import "github.com/Darklabel91/CNJ_Validate/Structs"
 
 func ReturnDatabase() []Structs.CNJDistrict {
-	var database []Structs.CNJDistrict
-
-	database = append(database,
+	return []Structs.CNJDistrict{
 		//Structs.CNJDistrict{"district_code", "district", "UF", "UF (ex)"},
 		Structs.CNJDistrict{"5.01.0000", "Rio de Janeiro", "RJ", "Rio de Janeiro"},
 		Structs.CNJDistrict{"5.01.0452", "Itaboraí", "RJ", "Rio de Janeiro"},
@@ -9829,7 +9827,5 @@ func ReturnDatabase() []Structs.CNJDistrict {
 		Structs.CNJDistrict{"3.00.0100", "Brasília", "DF", "Distrito Federal"},
 		Structs.CNJDistrict{"08.09.0651", "Goiânia", "GO", "Goiás"},
 		Structs.CNJDistrict{"5.17.0111", "Vitória", "ES", "Espírito Santo"},
-	)
-
-	return database
+	}
 }
