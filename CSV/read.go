@@ -2,7 +2,6 @@ package CSV
 
 import (
 	"encoding/csv"
-	"github.com/Darklabel91/CNJ_Validate/Error"
 	"os"
 )
 
@@ -12,10 +11,7 @@ func ReadCsvFile(filePath string, separator rune) ([]string, error) {
 		return nil, err
 	}
 
-	defer func(csvFile *os.File) {
-		err0 := csvFile.Close()
-		Error.CheckError(err0)
-	}(csvFile)
+	defer csvFile.Close()
 
 	csvR := csv.NewReader(csvFile)
 	csvR.Comma = separator

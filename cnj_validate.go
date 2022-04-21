@@ -63,7 +63,7 @@ func AnalyzeCNJ(cnj string) (Structs.AnalysisCNJ, error) {
 		Court1:      ct1,
 		Court2:      ct2,
 		Detailed:    dt,
-	}, err
+	}, nil
 
 }
 
@@ -75,7 +75,6 @@ func createCSVs(raw []string, nameResultFolder string) error {
 		if err != nil {
 			return err
 		}
-
 		analyzeCNJCSV = append(analyzeCNJCSV, dataReturn)
 	}
 
