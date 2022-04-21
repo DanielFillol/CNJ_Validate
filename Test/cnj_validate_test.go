@@ -1,4 +1,4 @@
-package Test
+package CNJ_Validate
 
 import (
 	"github.com/Darklabel91/CNJ_Validate"

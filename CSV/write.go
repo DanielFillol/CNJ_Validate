@@ -47,17 +47,15 @@ func ExportCSV(nameFile string, nameFolder string, cnj []Structs.AnalysisCNJ) er
 	}
 
 	csvFile, _ := create(nameFolder + "/" + nameFile + ".csv")
+
+	defer csvFile.Close()
+
 	csvWriter := csv.NewWriter(csvFile)
 
 	for _, empRow := range csvReturn {
 		_ = csvWriter.Write(empRow)
 	}
 	csvWriter.Flush()
-
-	err := csvFile.Close()
-	if err != nil {
-		return err
-	}
 
 	return nil
 }
