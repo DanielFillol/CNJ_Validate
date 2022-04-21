@@ -67,7 +67,6 @@ package main
 import (
 	"fmt"
 	"github.com/Darklabel91/CNJ_Validate"
-	"github.com/Darklabel91/CNJ_Validate/Error"
 	"github.com/Darklabel91/CNJ_Validate/Functions"
 )
 
@@ -76,16 +75,26 @@ func main() {
 	cnj := "0001327-64.2018.8.26.0158"
 
 	//Returns true if the CNJ is valid and the validation digit that it should have
-	bCNJ, _ := Functions.ValidateCNJ(cnj)
-	fmt.Println(bCNJ)
+	bCNJ, vd, err := Functions.ValidateCNJ(cnj)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(bCNJ, vd)
 
 	//Returns the valid CNJ in string format
-	vCNJ := Functions.ReturnValidCNJ(cnj)
+	vCNJ, err := Functions.ReturnValidCNJ(cnj)
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	fmt.Println(vCNJ)
 
 	//Returns a complex struct "AnalysisCNJ" with all the data in CNJ format ; returns error if any step of the verification is faulted
 	aCNJ, err := CNJ_Validate.AnalyzeCNJ(cnj)
-	Error.CheckError(err)
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	fmt.Println(aCNJ)
 
 	//Returns an organized string of all cnj attributes
@@ -93,18 +102,22 @@ func main() {
 	fmt.Println(cnjW)
 
 	//Returns a CSV File with the structured cnj analysis
-	raw := "/Users/Desktop/test.csv"
+	raw := "Database/exampleCNJfile.csv"
 	sp := ','
 	resultF := "TestFolder"
 
-	CNJ_Validate.AnalyzeCNJCSV(raw, sp, resultF)
+	err = CNJ_Validate.AnalyzeCNJCSV(raw, sp, resultF)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 }
 
  ```
  Output
  ``` 
-true
+ 
+true 64
 
 0001327-64.2018.8.26.0158
 
