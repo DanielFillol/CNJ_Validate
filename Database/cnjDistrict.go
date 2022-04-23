@@ -8,14 +8,6 @@ type DistrictInfo struct {
 	District   string
 }
 
-func FechtDistrict(districtCode string) (DistrictInfo, error) {
-	district, ok := districts[districtCode]
-	if !ok {
-		return DistrictInfo{}, errors.New("this district is not on our list and can not be fetched")
-	}
-	return district, nil
-}
-
 var districts = map[string]DistrictInfo{
 	"5.01.0452":  DistrictInfo{"Itaboraí", "RJ", "Rio de Janeiro"},
 	"5.01.0000":  DistrictInfo{"Rio de Janeiro", "RJ", "Rio de Janeiro"},
@@ -9820,4 +9812,12 @@ var districts = map[string]DistrictInfo{
 	"3.00.0100":  DistrictInfo{"Brasília", "DF", "Distrito Federal"},
 	"8.09.0651":  DistrictInfo{"Goiânia", "GO", "Goiás"},
 	"5.17.0111":  DistrictInfo{"Vitória", "ES", "Espírito Santo"},
+}
+
+func FechtDistrict(districtCode string) (DistrictInfo, error) {
+	SourceUnit, ok := districts[districtCode]
+	if !ok {
+		return DistrictInfo{}, errors.New("this district is not on our list and can not be fetched")
+	}
+	return SourceUnit, nil
 }

@@ -1,27 +1,40 @@
 package CNJ
 
+//AnalysisCNJ returns:
+//
+// 	receivedCNJ
+//
+// 	validCNJ given by ValidateCNJ
+//
+// 	segmentName and segmentShort given by GetSegment
+//
+// 	sourceUnitType and SourceUnitNumber given by GetSourceUnit
+//
+// 	courtType and courtNumber given by GetOriginCourt
+//
+// 	detailed is a struct on it's on given by DecomposeCNJ
 type AnalysisCNJ struct {
-	ReceivedCNJ      string        // "CNJ_original",
-	ValidCNJ         bool          // "CNJ_é_válido",
-	SegmentName      string        // "Segmento",
-	SegmentShort     string        // "Segmento_short",
-	SourceUnitType   string        // "Tipo_Unidade_Judiciária",
-	SourceUnitNumber string        // "Número_Unidade_Judiciária",
-	CourtType        string        // "Tipo_Região",
-	CourtNumber      string        // "Número_Região",
-	Detailed         DecomposedCNJ //
+	ReceivedCNJ      string        `json:"received_cnj,omitempty"`
+	ValidCNJ         bool          `json:"valid_cnj,omitempty"`
+	SegmentName      string        `json:"segmentName,omitempty"`
+	SegmentShort     string        `json:"segment_short,omitempty"`
+	SourceUnitType   string        `json:"source_unit_type,omitempty"`
+	SourceUnitNumber string        `json:"source_unit_number,omitempty"`
+	CourtType        string        `json:"court_type,omitempty"`
+	CourtNumber      string        `json:"court_number,omitempty"`
+	Detailed         DecomposedCNJ `json:"Detailed"`
 }
 
 type DecomposedCNJ struct {
-	LawsuitNumber  string `json:"lawsuit_number,omitempty"`  // "Número_Processo",
-	VerifyingDigit string `json:"verifying_digit,omitempty"` // "Dígito_Verificador",
-	ProtocolYear   string `json:"protocol_year,omitempty"`   // "Ano Protocolo",
-	Segment        string `json:"segment,omitempty"`         // "Poder Judiciário",
-	Court          string `json:"court,omitempty"`           // "Região",
-	SourceUnit     string `json:"source_unit,omitempty"`     // "Unidade Judiciária",
-	ArgNumber      string `json:"arg_number,omitempty"`      //
-	District       string `json:"district,omitempty"`        // "Nome_Unidade_Judiciária",
-	UF             string `json:"UF,omitempty"`              // "Nome_Região",
+	LawsuitNumber  string `json:"lawsuit_number,omitempty"`
+	VerifyingDigit string `json:"verifying_digit,omitempty"`
+	ProtocolYear   string `json:"protocol_year,omitempty"`
+	Segment        string `json:"segment,omitempty"`
+	Court          string `json:"court,omitempty"`
+	SourceUnit     string `json:"source_unit,omitempty"`
+	ArgNumber      string `json:"arg_number,omitempty"`
+	District       string `json:"district,omitempty"`
+	UF             string `json:"UF,omitempty"`
 }
 
 //AnalyzeCNJ returns the complex struct AnalysisCNJ containing all the useful data from this package
@@ -46,7 +59,7 @@ func AnalyzeCNJ(cnj string) (AnalysisCNJ, error) {
 		return AnalysisCNJ{}, err
 	}
 
-	originCourt, err := GetOriginCourt(decomposedCNJ.Court)
+	originCourt, err := GetOriginCourt(decomposedCNJ.Court, segment)
 	if err != nil {
 		return AnalysisCNJ{}, err
 	}

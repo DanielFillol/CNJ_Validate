@@ -21,9 +21,7 @@ const MATH = "00"
 //	ArgNumber [LawsuitNumber + ProtocolYear + Segment + Court + SourceUnit + "00"]
 //  DistrictInfo [Name and UF of the city] it is a reading of J.TR.OOOO combination
 func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
-	cnjLen := len(cnj)
-
-	if cnjLen != 20 && cnjLen != 25 {
+	if len(cnj) > 25 && len(cnj) < 20 {
 		return DecomposedCNJ{}, errors.New("CNJ out of format, it must have 25 or 20 char")
 	}
 
@@ -56,7 +54,7 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 			Court:          court,
 			SourceUnit:     sourceUnit,
 			ArgNumber:      argNumber,
-			District:       dt.District,
+			District:       dt.SourceUnit,
 			UF:             dt.UF,
 		}, nil
 	} else {

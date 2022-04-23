@@ -2,51 +2,14 @@ package CSV
 
 import (
 	"encoding/csv"
-	"fmt"
 	"github.com/Darklabel91/CNJ_Validate/CNJ"
 	"os"
 	"path/filepath"
 	"strconv"
 )
 
-// AnalyzeCNJCSV creates a csv with every single row with AnalyzeCNJ
-//from a given raw file and separator rune in a given folder
-func AnalyzeCNJCSV(rawFilePath string, separator rune, nameResultFolder string) error {
-	raw, err := ReadCsvFile(rawFilePath, separator)
-	if err != nil {
-		return err
-	}
-
-	err = createCSVs(raw, nameResultFolder)
-	if err != nil {
-		return err
-	}
-
-	fmt.Println("Files created")
-	return nil
-}
-
-func createCSVs(raw []string, nameResultFolder string) error {
-	var analyzeCNJCSV []CNJ.AnalysisCNJ
-
-	for i := 0; i < len(raw); i++ {
-		dataReturn, err := CNJ.AnalyzeCNJ(raw[i])
-		if err != nil {
-			return err
-		}
-		analyzeCNJCSV = append(analyzeCNJCSV, dataReturn)
-	}
-
-	err := exportCSV("filesOK", nameResultFolder, analyzeCNJCSV)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
 //ExportCSV exports a csv to a given folder, with a given name from a collection of AnalysisCNJ
-func exportCSV(fileName string, folderName string, cnjRows []CNJ.AnalysisCNJ) error {
+func writeCSV(fileName string, folderName string, cnjRows []CNJ.AnalysisCNJ) error {
 	var rows [][]string
 
 	rows = append(rows, generateHeaders())

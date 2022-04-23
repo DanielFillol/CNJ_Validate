@@ -31,20 +31,11 @@ type OriginCourt struct {
 }
 
 //GetOriginCourt returns OriginCourt
-func GetOriginCourt(cnj string) (OriginCourt, error) {
-	decomposedCNJ, err := DecomposeCNJ(cnj)
-	if err != nil {
-		return OriginCourt{}, err
-	}
-
-	segment, err := GetSegment(decomposedCNJ.Segment)
-	if err != nil {
-		return OriginCourt{}, err
-	}
-
+func GetOriginCourt(court string, segment Segment) (OriginCourt, error) {
 	var originC OriginCourt
+	var err error
 
-	switch decomposedCNJ.Court {
+	switch court {
 	case "00":
 		originC, err = parseCourt00(segment)
 		if err != nil {
@@ -56,7 +47,7 @@ func GetOriginCourt(cnj string) (OriginCourt, error) {
 			return OriginCourt{}, err
 		}
 	default:
-		originC, err = parseCourtOther(segment, decomposedCNJ.Court)
+		originC, err = parseCourtOther(segment, court)
 		if err != nil {
 			return OriginCourt{}, err
 		}
