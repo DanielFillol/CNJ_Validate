@@ -2,60 +2,124 @@ package CSV
 
 import (
 	"encoding/csv"
-	"github.com/Darklabel91/CNJ_Validate/Structs"
+	"fmt"
+	"github.com/Darklabel91/CNJ_Validate/CNJ"
 	"os"
 	"path/filepath"
 	"strconv"
 )
 
-func create(p string) (*os.File, error) {
+// AnalyzeCNJCSV creates a csv with every single row with AnalyzeCNJ
+//from a given raw file and separator rune in a given folder
+func AnalyzeCNJCSV(rawFilePath string, separator rune, nameResultFolder string) error {
+	raw, err := ReadCsvFile(rawFilePath, separator)
+	if err != nil {
+		return err
+	}
+
+	err = createCSVs(raw, nameResultFolder)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("Files created")
+	return nil
+}
+
+func createCSVs(raw []string, nameResultFolder string) error {
+	var analyzeCNJCSV []CNJ.AnalysisCNJ
+
+	for i := 0; i < len(raw); i++ {
+		dataReturn, err := CNJ.AnalyzeCNJ(raw[i])
+		if err != nil {
+			return err
+		}
+		analyzeCNJCSV = append(analyzeCNJCSV, dataReturn)
+	}
+
+	err := exportCSV("filesOK", nameResultFolder, analyzeCNJCSV)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+//ExportCSV exports a csv to a given folder, with a given name from a collection of AnalysisCNJ
+func exportCSV(fileName string, folderName string, cnjRows []CNJ.AnalysisCNJ) error {
+	var rows [][]string
+
+	rows = append(rows, generateHeaders())
+
+	for _, cnj := range cnjRows {
+		rows = append(rows, generateRow(cnj))
+	}
+
+	cf, err := createFile(folderName + "/" + fileName + ".csv")
+	if err != nil {
+		return err
+	}
+
+	defer cf.Close()
+
+	w := csv.NewWriter(cf)
+
+	err = w.WriteAll(rows)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// create csv file from operating system
+func createFile(p string) (*os.File, error) {
 	if err := os.MkdirAll(filepath.Dir(p), 0770); err != nil {
 		return nil, err
 	}
 	return os.Create(p)
 }
 
-func ExportCSV(nameFile string, nameFolder string, cnj []Structs.AnalysisCNJ) error {
-	var csvReturn [][]string
-
-	head := []string{"CNJ_original", "CNJ_e_válido", "CNJ_válido", "Dígito_Verificador_Válido", "Segmento", "Segmento_short", "Tipo_Unidade_Judiciária", "Número_Unidade_Judiciária", "Nome_Unidade_Judiciária", "Tipo_Região", "Número_Região", "Nome_Região", "Número_Processo", "Dígito_Verificador", "Ano Protocolo", "Poder Judiciário", "Região", "Unidade Judiciária"}
-	csvReturn = append(csvReturn, head)
-
-	for i := 0; i < len(cnj); i++ {
-		validCNJ := strconv.FormatBool(cnj[i].ValidCNJ)
-		final := []string{
-			cnj[i].ReceivedCNJ,
-			validCNJ,
-			cnj[i].CorrectCNJ,
-			cnj[i].ValidDigit,
-			cnj[i].Segment1,
-			cnj[i].Segment2,
-			cnj[i].SourceUnit1,
-			cnj[i].SourceUnit2,
-			cnj[i].Detailed.District,
-			cnj[i].Court1,
-			cnj[i].Court2,
-			cnj[i].Detailed.UF,
-			cnj[i].Detailed.LawsuitNumber,
-			cnj[i].Detailed.VerifyingDigit,
-			cnj[i].Detailed.ProtocolYear,
-			cnj[i].Detailed.Segment,
-			cnj[i].Detailed.Court,
-			cnj[i].Detailed.SourceUnit,
-		}
-		csvReturn = append(csvReturn, final)
+// generate the necessary headers for csv file
+func generateHeaders() []string {
+	return []string{
+		"CNJ_original",
+		"CNJ_é_válido",
+		"Segmento",
+		"Segmento_short",
+		"Tipo_Unidade_Judiciária",
+		"Número_Unidade_Judiciária",
+		"Nome_Unidade_Judiciária",
+		"Tipo_Região",
+		"Número_Região",
+		"Nome_Região",
+		"Número_Processo",
+		"Dígito_Verificador",
+		"Ano Protocolo",
+		"Poder Judiciário",
+		"Região",
+		"Unidade Judiciária",
 	}
+}
 
-	csvFile, _ := create(nameFolder + "/" + nameFile + ".csv")
-
-	defer csvFile.Close()
-
-	csvWriter := csv.NewWriter(csvFile)
-
-	for _, empRow := range csvReturn {
-		_ = csvWriter.Write(empRow)
+// returns a []string that compose the row in the csv file
+func generateRow(cnj CNJ.AnalysisCNJ) []string {
+	return []string{
+		cnj.ReceivedCNJ,
+		strconv.FormatBool(cnj.ValidCNJ),
+		cnj.SegmentName,
+		cnj.SegmentShort,
+		cnj.SourceUnitType,
+		cnj.SourceUnitNumber,
+		cnj.Detailed.District,
+		cnj.CourtType,
+		cnj.CourtNumber,
+		cnj.Detailed.UF,
+		cnj.Detailed.LawsuitNumber,
+		cnj.Detailed.VerifyingDigit,
+		cnj.Detailed.ProtocolYear,
+		cnj.Detailed.Segment,
+		cnj.Detailed.Court,
+		cnj.Detailed.SourceUnit,
 	}
-	csvWriter.Flush()
-
-	return nil
 }
