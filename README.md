@@ -66,8 +66,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/Darklabel91/CNJ_Validate"
-	"github.com/Darklabel91/CNJ_Validate/Functions"
+	"github.com/Darklabel91/CNJ_Validate/CNJ"
+	"github.com/Darklabel91/CNJ_Validate/CSV"
 )
 
 func main() {
@@ -75,38 +75,27 @@ func main() {
 	cnj := "0001327-64.2018.8.26.0158"
 
 	//Returns true if the CNJ is valid and the validation digit that it should have
-	bCNJ, vd, err := Functions.ValidateCNJ(cnj)
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(bCNJ, vd)
+	isValid, err := CNJ.ValidateCNJ(cnj)
+	fmt.Println(isValid, err)
 
-	//Returns the valid CNJ in string format
-	vCNJ, err := Functions.ReturnValidCNJ(cnj)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	fmt.Println(vCNJ)
+	//Returns a decomposed CNJ
+	decomposedCNJ, err := CNJ.DecomposeCNJ(cnj)
+	fmt.Println(decomposedCNJ, err)
 
 	//Returns a complex struct "AnalysisCNJ" with all the data in CNJ format ; returns error if any step of the verification is faulted
-	aCNJ, err := CNJ_Validate.AnalyzeCNJ(cnj)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	fmt.Println(aCNJ)
+	aCNJ, err := CNJ.AnalyzeCNJ(cnj)
+	fmt.Println(aCNJ, err)
 
 	//Returns an organized string of all cnj attributes
-	cnjW := CNJ_Validate.CNJWrite(aCNJ)
+	cnjW := CNJ.WriteCNJ(aCNJ)
 	fmt.Println(cnjW)
 
 	//Returns a CSV File with the structured cnj analysis
-	raw := "Database/exampleCNJfile.csv"
+	raw := "CSV/exampleCNJfile.csv"
 	sp := ','
 	resultF := "TestFolder"
 
-	err = CNJ_Validate.AnalyzeCNJCSV(raw, sp, resultF)
+	err = CSV.AnalyzeCNJCSV(raw, sp, resultF)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -116,14 +105,13 @@ func main() {
  ```
  Output
  ``` 
+ true <nil>
  
-true 64
+{0001327 64 2018 8 26 0158 00013272018826015800 São Paulo SP} <nil>
 
-0001327-64.2018.8.26.0158
+{0001327-64.2018.8.26.0158 true Justiça dos Estados e do Distrito Federal e Territórios Comum foro 0158 unidade federativa 8 {0001327 64 2018 8 26 0158 00013272018826015800 São Paulo SP}} <nil>
 
-{0001327-64.2018.8.26.0158 true 0001327-64.2018.8.26.0158 64 Justiça dos Estados e do Distrito Federal e Territórios Justiça Comum foro 0158 unidade federativa 26 {0001327 64 2018 8 26 0158 00013272018826015800 São Paulo São Paulo}}
-
-Processo número: 0001327, protocolado no foro de São Paulo, no ano 2018 | unidade federativa: São Paulo | Justiça dos Estados e do Distrito Federal e Territórios (Justiça Comum)
+Processo número: 0001327, protocolado no foro de São Paulo, no ano 2018 | unidade federativa: SP | Justiça dos Estados e do Distrito Federal e Territórios (Comum)
 
 Files created
  ```
