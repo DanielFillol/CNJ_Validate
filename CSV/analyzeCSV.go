@@ -8,7 +8,7 @@ import (
 // AnalyzeCNJCSV creates a csv with every single row with AnalyzeCNJ
 //from a given raw file and separator rune in a given folder
 func AnalyzeCNJCSV(rawFilePath string, separator rune, nameResultFolder string) error {
-	raw, err := ReadCsvFile(rawFilePath, separator)
+	raw, err := readCsvFile(rawFilePath, separator)
 	if err != nil {
 		return err
 	}
@@ -22,11 +22,12 @@ func AnalyzeCNJCSV(rawFilePath string, separator rune, nameResultFolder string) 
 	return nil
 }
 
+//execute the AnalyzeCNJ from a []string
 func createCSVs(raw []string, nameResultFolder string) error {
 	var analyzeCNJCSV []CNJ.AnalysisCNJ
 
-	for i := 0; i < len(raw); i++ {
-		dataReturn, _ := CNJ.AnalyzeCNJ(raw[i])
+	for _, cnj := range raw {
+		dataReturn, _ := CNJ.AnalyzeCNJ(cnj)
 		analyzeCNJCSV = append(analyzeCNJCSV, dataReturn)
 	}
 

@@ -29,33 +29,6 @@ func TestAnalyzeCNJCSV(t *testing.T) {
 	}
 }
 
-func TestReadCsvFile(t *testing.T) {
-	type args struct {
-		filePath  string
-		separator rune
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []string
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := ReadCsvFile(tt.args.filePath, tt.args.separator)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ReadCsvFile() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ReadCsvFile() got = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
 func Test_createCSVs(t *testing.T) {
 	type args struct {
 		raw              []string
@@ -103,28 +76,6 @@ func Test_createFile(t *testing.T) {
 	}
 }
 
-func Test_exportCSV(t *testing.T) {
-	type args struct {
-		fileName   string
-		folderName string
-		cnjRows    []CNJ.AnalysisCNJ
-	}
-	tests := []struct {
-		name    string
-		args    args
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if err := exportCSV(tt.args.fileName, tt.args.folderName, tt.args.cnjRows); (err != nil) != tt.wantErr {
-				t.Errorf("exportCSV() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
-	}
-}
-
 func Test_generateHeaders(t *testing.T) {
 	tests := []struct {
 		name string
@@ -156,6 +107,55 @@ func Test_generateRow(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := generateRow(tt.args.cnj); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("generateRow() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_readCsvFile(t *testing.T) {
+	type args struct {
+		filePath  string
+		separator rune
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    []string
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := readCsvFile(tt.args.filePath, tt.args.separator)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("readCsvFile() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("readCsvFile() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_writeCSV(t *testing.T) {
+	type args struct {
+		fileName   string
+		folderName string
+		cnjRows    []CNJ.AnalysisCNJ
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := writeCSV(tt.args.fileName, tt.args.folderName, tt.args.cnjRows); (err != nil) != tt.wantErr {
+				t.Errorf("writeCSV() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}

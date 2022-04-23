@@ -1,17 +1,11 @@
 package CNJ
 
 //AnalysisCNJ returns:
-//
 // 	receivedCNJ
-//
 // 	validCNJ given by ValidateCNJ
-//
 // 	segmentName and segmentShort given by GetSegment
-//
 // 	sourceUnitType and SourceUnitNumber given by GetSourceUnit
-//
 // 	courtType and courtNumber given by GetOriginCourt
-//
 // 	detailed is a struct on it's on given by DecomposeCNJ
 type AnalysisCNJ struct {
 	ReceivedCNJ      string        `json:"received_cnj,omitempty"`
@@ -25,6 +19,16 @@ type AnalysisCNJ struct {
 	Detailed         DecomposedCNJ `json:"Detailed"`
 }
 
+//DecomposedCNJ returns the CNJ in decomposed manner:
+//  lawsuitNumber: [NNNNNNN]
+//  verifyingDigit: [DD]
+//  protocolYear: [AAAA]
+//  segment: [J]
+//  court: [CT]
+//  sourceUnit: [0000]
+//  argNumber: [NNNNNNNAAAAJCT0000] + "00"
+//  district: district where the lawsuit was proposed, frequently a city name
+//  uf: the uf of the correspondent district
 type DecomposedCNJ struct {
 	LawsuitNumber  string `json:"lawsuit_number,omitempty"`
 	VerifyingDigit string `json:"verifying_digit,omitempty"`
@@ -38,6 +42,7 @@ type DecomposedCNJ struct {
 }
 
 //AnalyzeCNJ returns the complex struct AnalysisCNJ containing all the useful data from this package
+//
 func AnalyzeCNJ(cnj string) (AnalysisCNJ, error) {
 	decomposedCNJ, err := DecomposeCNJ(cnj)
 	if err != nil {
@@ -78,6 +83,8 @@ func AnalyzeCNJ(cnj string) (AnalysisCNJ, error) {
 
 }
 
+//WriteCNJ returns a single string with all organized interpretation of CNJ information
+//
 func WriteCNJ(number AnalysisCNJ) string {
 	lawsuit := number.Detailed.LawsuitNumber
 	year := number.Detailed.ProtocolYear

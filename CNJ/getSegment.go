@@ -6,7 +6,6 @@ import (
 )
 
 // Segment returns three basic infos:
-//
 //	number - the segment code
 //  name  - the full name of the segment
 //  short - the segment nickname
@@ -16,6 +15,8 @@ type Segment struct {
 	Short  string
 }
 
+//courtSegment is a map of every possible segment allowed on CNJ format (goes from 1 to 9)
+//
 var courtSegment = map[int]Segment{
 	1: {Number: 1, Name: "Supremo Tribunal Federal", Short: "STF"},
 	2: {Number: 2, Name: "Conselho Nacional de Justiça", Short: "CNJ"},
@@ -29,7 +30,6 @@ var courtSegment = map[int]Segment{
 }
 
 // GetSegment returns one of nine possible segments:
-//
 // 	Supremo Tribunal Federal
 // 	Conselho Nacional de Justiça
 // 	Superior Tribunal de Justiça

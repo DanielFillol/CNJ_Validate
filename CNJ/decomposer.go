@@ -9,9 +9,7 @@ import (
 const MATH = "00"
 
 // DecomposeCNJ decompose cnj format number into the specifics:
-//
-// NNNNNNN-DD.AAAA.J.TR.OOOO
-//
+//  NNNNNNN-DD.AAAA.J.TR.OOOO
 //  LawsuitNumber = [NNNNNNN]
 //	VerifyingDigit = [DD]
 //	ProtocolYear = [AAAA]
@@ -41,7 +39,7 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 		argNumber := lawsuitNumber + yearProtocol + segment + court + sourceUnit + MATH
 		semiCNJ := segment + "." + court + "." + sourceUnit
 
-		dt, err := Database.FechtDistrict(semiCNJ)
+		dt, err := Database.FetchDistrict(semiCNJ)
 		if err != nil {
 			return DecomposedCNJ{}, err
 		}
@@ -76,7 +74,7 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 		argNumber := lawsuitNumber + yearProtocol + segment + court + sourceUnit + MATH
 		semiCNJ := segment + "." + court + "." + sourceUnit
 
-		dt, err := Database.FechtDistrict(semiCNJ)
+		dt, err := Database.FetchDistrict(semiCNJ)
 		if err != nil {
 			return DecomposedCNJ{}, err
 		}
