@@ -1,5 +1,7 @@
 package CNJ
 
+import "errors"
+
 //AnalysisCNJ returns:
 // 	receivedCNJ
 // 	validCNJ given by ValidateCNJ
@@ -85,7 +87,12 @@ func AnalyzeCNJ(cnj string) (AnalysisCNJ, error) {
 
 //WriteCNJ returns a single string with all organized interpretation of CNJ information
 //
-func WriteCNJ(number AnalysisCNJ) string {
+func WriteCNJ(number AnalysisCNJ) (string, error) {
+
+	if number.Detailed.LawsuitNumber == "" {
+		return "", errors.New("AnalysisCNJ have no usable data")
+	}
+
 	lawsuit := number.Detailed.LawsuitNumber
 	year := number.Detailed.ProtocolYear
 	segment1 := number.SegmentName
@@ -114,6 +121,6 @@ func WriteCNJ(number AnalysisCNJ) string {
 		preposition = "a"
 	}
 
-	return "Processo número: " + lawsuit + ", protocolado n" + preposition + " " + sourceU1 + " de " + sourceU2 + ", no ano " + year + " | " + ct1 + ": " + ct2 + " | " + segment1 + " (" + segment2 + ")"
+	return "Processo número: " + lawsuit + ", protocolado n" + preposition + " " + sourceU1 + " de " + sourceU2 + ", no ano " + year + " | " + ct1 + ": " + ct2 + " | " + segment1 + " (" + segment2 + ")", nil
 
 }
