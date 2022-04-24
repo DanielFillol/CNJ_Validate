@@ -27,7 +27,20 @@ func createCSVs(raw []string, nameResultFolder string) error {
 	var analyzeCNJCSV []CNJ.AnalysisCNJ
 
 	for _, cnj := range raw {
-		dataReturn, _ := CNJ.AnalyzeCNJ(cnj)
+		dataReturn, err := CNJ.AnalyzeCNJ(cnj)
+		if err != nil {
+			analyzeCNJCSV = append(analyzeCNJCSV, CNJ.AnalysisCNJ{
+				ReceivedCNJ:      err.Error(),
+				ValidCNJ:         false,
+				SegmentName:      err.Error(),
+				SegmentShort:     err.Error(),
+				SourceUnitType:   err.Error(),
+				SourceUnitNumber: err.Error(),
+				CourtType:        err.Error(),
+				CourtNumber:      err.Error(),
+				Detailed:         CNJ.DecomposedCNJ{},
+			})
+		}
 		analyzeCNJCSV = append(analyzeCNJCSV, dataReturn)
 	}
 
