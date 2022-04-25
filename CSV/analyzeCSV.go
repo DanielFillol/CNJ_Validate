@@ -30,7 +30,7 @@ func createCSVs(raw []string, nameResultFolder string) error {
 		dataReturn, err := CNJ.AnalyzeCNJ(cnj)
 		if err != nil {
 			analyzeCNJCSV = append(analyzeCNJCSV, CNJ.AnalysisCNJ{
-				ReceivedCNJ:      err.Error(),
+				ReceivedCNJ:      cnj,
 				ValidCNJ:         false,
 				SegmentName:      err.Error(),
 				SegmentShort:     err.Error(),
