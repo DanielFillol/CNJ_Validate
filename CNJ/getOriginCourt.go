@@ -20,7 +20,6 @@ const (
 //	circunscrição judiciária
 //	in cases were the lawsuit is not initiate at 1st instance (primeiro grau) it returns:
 //	processo originário
-//
 // originCourtNumber:
 // 	the given court number
 type OriginCourt struct {
@@ -28,9 +27,8 @@ type OriginCourt struct {
 	originCourtNumber string
 }
 
-//GetOriginCourt returns OriginCourt
-//
-func GetOriginCourt(court string, segment Segment) (OriginCourt, error) {
+//getOriginCourt returns OriginCourt
+func getOriginCourt(court string, segment Segment) (OriginCourt, error) {
 	var originC OriginCourt
 	var err error
 
@@ -105,7 +103,6 @@ func parseCourt90(segment Segment) (OriginCourt, error) {
 }
 
 //Martial court returns the 3 possible locations of the origin Court
-//
 func parseMartialCourt(oc int) (OriginCourt, error) {
 	var cType string
 	var cNumber string
@@ -172,7 +169,6 @@ func parseCourtOther(segment Segment, orginCourt string) (OriginCourt, error) {
 }
 
 //Every court has a maximum number of court, this function validate it
-//
 func isCourtValid(segment Segment, court int) bool {
 	switch segment.Number {
 	case 4, 5:
@@ -199,7 +195,6 @@ func isCourtValid(segment Segment, court int) bool {
 }
 
 //A simple check if a given court is over the max limit number that it can be
-//
 func ocError(segment Segment, court int) error {
 	max, err := getMax(segment)
 	if err != nil {
@@ -214,7 +209,6 @@ func ocError(segment Segment, court int) error {
 }
 
 //Returns the maximum value a given court may have
-//
 func getMax(segment Segment) (int, error) {
 	var max int
 

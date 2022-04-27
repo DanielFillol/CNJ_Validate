@@ -1,4 +1,4 @@
-package CSV
+package CNJCSV
 
 import (
 	"encoding/csv"

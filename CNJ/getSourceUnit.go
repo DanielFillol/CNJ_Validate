@@ -29,8 +29,8 @@ type SourceUnit struct {
 	SourceUnitNumber string
 }
 
-//GetSourceUnit returns SourceUnit
-func GetSourceUnit(sourceUnit string, segment Segment) (SourceUnit, error) {
+//getSourceUnit returns SourceUnit
+func getSourceUnit(sourceUnit string, segment Segment) (SourceUnit, error) {
 
 	if isZeroSequence(sourceUnit) {
 		return SourceUnit{CourtUnitSingle, sourceUnit}, nil

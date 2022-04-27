@@ -5,9 +5,9 @@ import "errors"
 //AnalysisCNJ returns:
 // 	receivedCNJ
 // 	validCNJ given by ValidateCNJ
-// 	segmentName and segmentShort given by GetSegment
-// 	sourceUnitType and SourceUnitNumber given by GetSourceUnit
-// 	courtType and courtNumber given by GetOriginCourt
+// 	segmentName and segmentShort given by getSegment
+// 	sourceUnitType and SourceUnitNumber given by getSourceUnit
+// 	courtType and courtNumber given by getOriginCourt
 // 	detailed is a struct on it's on given by DecomposeCNJ
 type AnalysisCNJ struct {
 	ReceivedCNJ      string        `json:"received_cnj,omitempty"`
@@ -44,7 +44,6 @@ type DecomposedCNJ struct {
 }
 
 //AnalyzeCNJ returns the complex struct AnalysisCNJ containing all the useful data from this package
-//
 func AnalyzeCNJ(cnj string) (AnalysisCNJ, error) {
 	decomposedCNJ, err := DecomposeCNJ(cnj)
 	if err != nil {
@@ -56,17 +55,17 @@ func AnalyzeCNJ(cnj string) (AnalysisCNJ, error) {
 		return AnalysisCNJ{}, err
 	}
 
-	segment, err := GetSegment(decomposedCNJ.Segment)
+	segment, err := getSegment(decomposedCNJ.Segment)
 	if err != nil {
 		return AnalysisCNJ{}, err
 	}
 
-	sourceUnit, err := GetSourceUnit(decomposedCNJ.SourceUnit, segment)
+	sourceUnit, err := getSourceUnit(decomposedCNJ.SourceUnit, segment)
 	if err != nil {
 		return AnalysisCNJ{}, err
 	}
 
-	originCourt, err := GetOriginCourt(decomposedCNJ.Court, segment)
+	originCourt, err := getOriginCourt(decomposedCNJ.Court, segment)
 	if err != nil {
 		return AnalysisCNJ{}, err
 	}
@@ -86,7 +85,6 @@ func AnalyzeCNJ(cnj string) (AnalysisCNJ, error) {
 }
 
 //WriteCNJ returns a single string with all organized interpretation of CNJ information
-//
 func WriteCNJ(number AnalysisCNJ) (string, error) {
 
 	if number.Detailed.LawsuitNumber == "" {

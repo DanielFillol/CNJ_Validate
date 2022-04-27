@@ -1,4 +1,4 @@
-package CSV
+package CNJCSV
 
 import (
 	"encoding/csv"
@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-//ExportCSV exports a csv to a given folder, with a given name from a collection of AnalysisCNJ
+//writeCSV exports a csv to a given folder, with a given name from a collection of AnalysisCNJ
 func writeCSV(fileName string, folderName string, cnjRows []CNJ.AnalysisCNJ) error {
 	var rows [][]string
 

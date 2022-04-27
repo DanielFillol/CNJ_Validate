@@ -16,7 +16,6 @@ type Segment struct {
 }
 
 //courtSegment is a map of every possible segment allowed on CNJ format (goes from 1 to 9)
-//
 var courtSegment = map[int]Segment{
 	1: {Number: 1, Name: "Supremo Tribunal Federal", Short: "STF"},
 	2: {Number: 2, Name: "Conselho Nacional de Justiça", Short: "CNJ"},
@@ -29,7 +28,7 @@ var courtSegment = map[int]Segment{
 	9: {Number: 9, Name: "Justiça Militar Estadual", Short: "JME"},
 }
 
-// GetSegment returns one of nine possible segments:
+// getSegment returns one of nine possible segments:
 // 	Supremo Tribunal Federal
 // 	Conselho Nacional de Justiça
 // 	Superior Tribunal de Justiça
@@ -39,7 +38,7 @@ var courtSegment = map[int]Segment{
 // 	Justiça Militar da União
 // 	Justiça dos Estados e do Distrito Federal e Territórios
 // 	Justiça Militar Estadual
-func GetSegment(segment string) (Segment, error) {
+func getSegment(segment string) (Segment, error) {
 	segmentCode, err := strconv.Atoi(segment)
 	if err != nil {
 		return Segment{}, err

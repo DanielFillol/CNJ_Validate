@@ -2,7 +2,7 @@ package CNJ
 
 import (
 	"errors"
-	"github.com/Darklabel91/CNJ_Validate/Database"
+	"github.com/Darklabel91/CNJ_Validate/CNJDatabase"
 	"strings"
 )
 
@@ -39,7 +39,7 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 		argNumber := lawsuitNumber + yearProtocol + segment + court + sourceUnit + MATH
 		semiCNJ := segment + "." + court + "." + sourceUnit
 
-		dt, err := Database.FetchDistrict(semiCNJ)
+		dt, err := CNJDatabase.FetchDistrict(semiCNJ)
 		if err != nil {
 			return DecomposedCNJ{}, err
 		}
@@ -74,7 +74,7 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 		argNumber := lawsuitNumber + yearProtocol + segment + court + sourceUnit + MATH
 		semiCNJ := segment + "." + court + "." + sourceUnit
 
-		dt, err := Database.FetchDistrict(semiCNJ)
+		dt, err := CNJDatabase.FetchDistrict(semiCNJ)
 		if err != nil {
 			return DecomposedCNJ{}, err
 		}

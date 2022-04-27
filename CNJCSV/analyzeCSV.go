@@ -1,4 +1,4 @@
-package CSV
+package CNJCSV
 
 import (
 	"fmt"
@@ -40,8 +40,9 @@ func createCSVs(raw []string, nameResultFolder string) error {
 				CourtNumber:      err.Error(),
 				Detailed:         CNJ.DecomposedCNJ{},
 			})
+		} else {
+			analyzeCNJCSV = append(analyzeCNJCSV, dataReturn)
 		}
-		analyzeCNJCSV = append(analyzeCNJCSV, dataReturn)
 	}
 
 	err := writeCSV("filesOK", nameResultFolder, analyzeCNJCSV)
