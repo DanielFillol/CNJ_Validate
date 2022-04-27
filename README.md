@@ -63,7 +63,7 @@ package main
 import (
 	"fmt"
 	"github.com/Darklabel91/CNJ_Validate/CNJ"
-	"github.com/Darklabel91/CNJ_Validate/CSV"
+	"github.com/Darklabel91/CNJ_Validate/CNJCSV"
 )
 
 func main() {
@@ -91,7 +91,7 @@ func main() {
 	sp := ','
 	resultF := "TestFolder"
 
-	err = CSV.AnalyzeCNJCSV(raw, sp, resultF)
+	err = CNJCSV.AnalyzeCNJCSV(raw, sp, resultF)
 	if err != nil {
 		fmt.Println(err)
 	}
