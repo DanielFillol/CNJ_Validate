@@ -1,11 +1,11 @@
 # CNJ_Validate
-Projeto criado para realizar a manipulação de todos os dados possíveis dentro do padrão do CNJ. Todo o projeto tem como base na [Resolução 65 do CNJ](https://atos.cnj.jus.br/files/resolucao_comp_65_16122008_26032019140041.pdf)
+Package for manipulation and validation of lawsuit number in CNJ format. The CNJ format is defined in [Resolução 65 do CNJ](https://atos.cnj.jus.br/files/resolucao_comp_65_16122008_26032019140041.pdf)
 
 ## Instal
 ``` go get -u github.com/Darklabel91/CNJ_Validate ```
 
 ## Data Struct
-Os dados de retorno podem ser ```string```, ```bool```, ```AnalysisCNJ``` ou ```DecomposedCNJ``` , essas últimas são composta por:
+Retuurn data can be: ```string```, ```bool```, ```AnalysisCNJ``` or ```DecomposedCNJ```, the last two:
 
 ``` 
 type AnalysisCNJ struct {
@@ -33,15 +33,15 @@ type DecomposedCNJ struct {
 }
 ```
 ### AnalysisCNJ
-- ReceivedCNJ: o cnj passado como parâmetro [0001327-64.2018.8.26.0158]
-- ValidCNJ: informa '''true''' caso o *ReceivedCNJ* tenha o dígito verificador como válido [true]
-- SegmentName: informa o seguimento do ramo da justiça correspondente [Justiça dos Estados e do Distrito Federal e Territórios]
-- SegmentShort: informa a sigla do seguimento da justiça correspondente [Justiça Comum]
-- SourceUnitType: informa o tipo da unidade de origem [foro]
-- SourceUnitNumber: informa a unidade de origem [0158]
-- CourtType: informa o tipo de corte de origem [unidade federativa]
-- CourtNumber: informa a unidade da corte de origem [26]
-- Detailed: retorna a estrutura do CNJNumber
+- ReceivedCNJ: searched CNJ [0001327-64.2018.8.26.0158]
+- ValidCNJ: return '''true''' case *ReceivedCNJ*  has a valid verifying digit [true]
+- SegmentName: return competent justice branch [Justiça dos Estados e do Distrito Federal e Territórios]
+- SegmentShort: return justice branch short name [Justiça Comum]
+- SourceUnitType: return justice unit type [foro]
+- SourceUnitNumber: return justice unit number [0158]
+- CourtType: origin court type [unidade federativa]
+- CourtNumber: origin court number [26]
+- Detailed: return CNJNumber
 
 ### CNJNumber
 - LawsuitNumber: NNNNNNN [0001327]
@@ -50,9 +50,9 @@ type DecomposedCNJ struct {
 - Segment: J [8]
 - Court: CT [26]
 - SourceUnit: 0000 [0158]
-- ArgNumber:NNNNNNNAAAAJCT0000 + 00 [00013272018826015800] (utilizado pelo cálculo do *VerifyingDigit*)
-- District: o foro em que a ação foi protocolada (normalmente a cidade, zona eleitoral, vara trabalhista) [São Paulo]
-- UF: A unidade federativa que o foro em que a ação foi protocolada pertence [São Paulo] 
+- ArgNumber:NNNNNNNAAAAJCT0000 + 00 [00013272018826015800] (need for caculate *VerifyingDigit*)
+- District: location where the lawsuit began (city, electoral district, labor district)[São Paulo]
+- UF: The state short name where the lawsuit began [SP]
 
 
 ## Example
@@ -115,18 +115,13 @@ Files created
  ## Functions
 
 ### Main Function:
-- AnalyzeCNJ(cnj string) retorna a estrutura *AnalysisCNJ* necessitando apenas de um CNJ no formato *NNNNNNN-DD.AAAA.J.CT.0000* ou *NNNNNNNDDAAAAJCT0000* retorna erro caso qualquer verificação seja inválida.
-- CNJWrite(number Structs.AnalysisCNJ) retorna uma frase para demostrar a organização das informações, necessita de um *AnalysisCNJ*
-- AnalyzeCNJCSV(rawFilePath string, separator rune, nameResultFolder string) retorna um CSV com a estrutura *AnalysisCNJ* necessitando do caminho onde está o arquivo para leitura (devendo ter apenas uma coluna com os números CNJ), o separador (','), e o nome da pasta em que os arquivos devem retornar
+- AnalyzeCNJ(cnj string) return *AnalysisCNJ* need CNJ *NNNNNNN-DD.AAAA.J.CT.0000* or *NNNNNNNDDAAAAJCT0000* can return error.
+- CNJWrite(number Structs.AnalysisCNJ) return string explaining the lawsuit, need *AnalysisCNJ*
+- AnalyzeCNJCSV(rawFilePath string, separator rune, nameResultFolder string) return CSV with *AnalysisCNJ* on given folder in *nameResultFolder*, neeed .csv file path in *rawFilePath*, must be a single column.
 
 
 ### Suport Functions:
--  DecomposeCNJ(cnj string) retorna *[DecomposedCNJ](https://pkg.go.dev/github.com/Darklabel91/CNJ_Validate/CNJ#DecomposedCNJ)* necessitando de um CNJ no formato *NNNNNNN-DD.AAAA.J.CT.0000* ou *NNNNNNNDDAAAAJCT0000*
--  GetOriginCourt(court string, segment Segment) retorna [OriginCourt](https://pkg.go.dev/github.com/Darklabel91/CNJ_Validate/CNJ#OriginCourt) necessitando do códgigo do tribunal (composto por dois dígitos) e um *[Segment](https://pkg.go.dev/github.com/Darklabel91/CNJ_Validate/CNJ#Segment)*
-- GetSourceUnit(sourceUnit string, segment Segment) retorna *[SourceUnit](https://pkg.go.dev/github.com/Darklabel91/CNJ_Validate/CNJ#SourceUnit)* necessitando do código da unidade (composto por 4 dígitos) e um *[Segment](https://pkg.go.dev/github.com/Darklabel91/CNJ_Validate/CNJ#Segment)*
-- ValidateCNJ(cnj string) retorna um *True* para uma sequência CNJ válida no formato *NNNNNNN-DD.AAAA.J.CT.0000* ou *NNNNNNNDDAAAAJCT0000* 
-
-## Considerações
-A) Esse projeto foi criado de forma voluntária, você pode contribuir de qualquer modo. Se encontrar uma falha, não hesite em criar um “issue” ou  procure corrigir você mesma(o) o erro e dar um “pull request”.
-
-B) use os dados baixados para agregar valor, como por exemplo, para realizar análises ou publicar artigos, fazer inferências, elaborar recomendações aos poderes públicos etc. Baixar esses dados para reproduzi-los em sua página web é tirar proveito do trabalho alheio, mesmo sendo esses dados públicos.
+-  DecomposeCNJ(cnj string) returns *[DecomposedCNJ](https://pkg.go.dev/github.com/Darklabel91/CNJ_Validate/CNJ#DecomposedCNJ)* need CNJ *NNNNNNN-DD.AAAA.J.CT.0000* or *NNNNNNNDDAAAAJCT0000*
+-  GetOriginCourt(court string, segment Segment) return [OriginCourt](https://pkg.go.dev/github.com/Darklabel91/CNJ_Validate/CNJ#OriginCourt) need court code (CT) also return *[Segment](https://pkg.go.dev/github.com/Darklabel91/CNJ_Validate/CNJ#Segment)* and 
+- GetSourceUnit(sourceUnit string, segment Segment) return *[SourceUnit](https://pkg.go.dev/github.com/Darklabel91/CNJ_Validate/CNJ#SourceUnit)* need source unit code [0000] also return *[Segment](https://pkg.go.dev/github.com/Darklabel91/CNJ_Validate/CNJ#Segment)*
+- ValidateCNJ(cnj string) return *True* for valid CNJ sequence *NNNNNNN-DD.AAAA.J.CT.0000* or *NNNNNNNDDAAAAJCT0000* 
