@@ -15,7 +15,7 @@ type AnalysisCNJ struct {
 	SegmentShort     string        `json:"segment_short,omitempty"`
 	SourceUnitType   string        `json:"source_unit_type,omitempty"`
 	SourceUnitNumber string        `json:"source_unit_number,omitempty"`
-	CourtType        strin        `json:"court_type,omitempty"`
+	CourtType        string        `json:"court_type,omitempty"`
 	CourtNumber      string        `json:"court_number,omitempty"`
 	Detailed         DecomposedCNJ `json:"Detailed"`
 }
