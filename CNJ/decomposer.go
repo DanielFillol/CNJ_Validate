@@ -86,7 +86,19 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 
 		dt, err := CNJDatabase.FetchDistrict(semiCNJ)
 		if err != nil {
-			return DecomposedCNJ{}, err
+			if err != nil {
+				return DecomposedCNJ{
+					LawsuitNumber:  lawsuitNumber,
+					VerifyingDigit: verifyingDigit,
+					ProtocolYear:   yearProtocol,
+					Segment:        segment,
+					Court:          court,
+					SourceUnit:     sourceUnit,
+					ArgNumber:      argNumber,
+					District:       err.Error(),
+					UF:             err.Error(),
+				}, err
+			}
 		}
 
 		return DecomposedCNJ{
