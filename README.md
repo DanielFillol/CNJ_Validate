@@ -2,7 +2,7 @@
 Package for manipulation and validation of lawsuit number in CNJ format. The CNJ format is defined in [Resolução 65 do CNJ](https://atos.cnj.jus.br/files/resolucao_comp_65_16122008_26032019140041.pdf)
 
 ## Instal
-``` go get -u github.com/Darklabel91/CNJ_Validate ```
+``` go get -u github.com/DanielFillol/CNJ_Validate ```
 
 ## Data Struct
 Retuurn data can be: ```string```, ```bool```, ```AnalysisCNJ``` or ```DecomposedCNJ```, the last two:
