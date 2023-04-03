@@ -21,15 +21,16 @@ type AnalysisCNJ struct {
 }
 
 type DecomposedCNJ struct {
-	LawsuitNumber  string `json:"lawsuit_number,omitempty"`
-	VerifyingDigit string `json:"verifying_digit,omitempty"`
-	ProtocolYear   string `json:"protocol_year,omitempty"`
-	Segment        string `json:"segment,omitempty"`
-	Court          string `json:"court,omitempty"`
-	SourceUnit     string `json:"source_unit,omitempty"`
-	ArgNumber      string `json:"arg_number,omitempty"`
-	District       string `json:"district,omitempty"`
-	UF             string `json:"UF,omitempty"`
+	LawsuitCNJFormat string `json:"lawsuitCNJFormat,omitempty"`
+	LawsuitNumber    string `json:"lawsuit_number,omitempty"`
+	VerifyingDigit   string `json:"verifying_digit,omitempty"`
+	ProtocolYear   	 string `json:"protocol_year,omitempty"`
+	Segment        	 string `json:"segment,omitempty"`
+	Court          	 string `json:"court,omitempty"`
+	SourceUnit     	 string `json:"source_unit,omitempty"`
+	ArgNumber      	 string `json:"arg_number,omitempty"`
+	District       	 string `json:"district,omitempty"`
+	UF             	 string `json:"UF,omitempty"`
 }
 ```
 ### AnalysisCNJ
@@ -44,6 +45,7 @@ type DecomposedCNJ struct {
 - Detailed: return CNJNumber
 
 ### CNJNumber
+- LawsuitCNJFormat [NNNNNNN]-[DD].[AAAA].[J].[CT].[0000]
 - LawsuitNumber: NNNNNNN [0001327]
 - VerifyingDigit: DD [64]
 - ProtocolYear: AAAA [2018]
