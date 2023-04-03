@@ -9,7 +9,7 @@ import (
 const MATH = "00"
 
 // DecomposeCNJ decompose cnj format number into the specifics:
-//  NNNNNNN-DD.AAAA.J.TR.OOOO
+//	lawsuitCNJFormat [NNNNNNN]-[DD].[AAAA].[J].[CT].[0000]
 //  LawsuitNumber = [NNNNNNN]
 //	VerifyingDigit = [DD]
 //	ProtocolYear = [AAAA]
@@ -42,28 +42,30 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 		dt, err := CNJDatabase.FetchDistrict(semiCNJ)
 		if err != nil {
 			return DecomposedCNJ{
-				LawsuitNumber:  lawsuitNumber,
-				VerifyingDigit: verifyingDigit,
-				ProtocolYear:   yearProtocol,
-				Segment:        segment,
-				Court:          court,
-				SourceUnit:     sourceUnit,
-				ArgNumber:      argNumber,
-				District:       err.Error(),
-				UF:             err.Error(),
+				LawsuitCNJFormat: lawsuitNumber + "-" + verifyingDigit + "." + yearProtocol + "." + segment + "." + court + "." + sourceUnit,
+				LawsuitNumber:    lawsuitNumber,
+				VerifyingDigit:   verifyingDigit,
+				ProtocolYear:     yearProtocol,
+				Segment:          segment,
+				Court:            court,
+				SourceUnit:       sourceUnit,
+				ArgNumber:        argNumber,
+				District:         err.Error(),
+				UF:               err.Error(),
 			}, err
 		}
 
 		return DecomposedCNJ{
-			LawsuitNumber:  lawsuitNumber,
-			VerifyingDigit: verifyingDigit,
-			ProtocolYear:   yearProtocol,
-			Segment:        segment,
-			Court:          court,
-			SourceUnit:     sourceUnit,
-			ArgNumber:      argNumber,
-			District:       dt.SourceUnit,
-			UF:             dt.UF,
+			LawsuitCNJFormat: lawsuitNumber + "-" + verifyingDigit + "." + yearProtocol + "." + segment + "." + court + "." + sourceUnit,
+			LawsuitNumber:    lawsuitNumber,
+			VerifyingDigit:   verifyingDigit,
+			ProtocolYear:     yearProtocol,
+			Segment:          segment,
+			Court:            court,
+			SourceUnit:       sourceUnit,
+			ArgNumber:        argNumber,
+			District:         dt.SourceUnit,
+			UF:               dt.UF,
 		}, nil
 	} else {
 		lawsuitNumber := cnj[0:7]
@@ -88,29 +90,31 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 		if err != nil {
 			if err != nil {
 				return DecomposedCNJ{
-					LawsuitNumber:  lawsuitNumber,
-					VerifyingDigit: verifyingDigit,
-					ProtocolYear:   yearProtocol,
-					Segment:        segment,
-					Court:          court,
-					SourceUnit:     sourceUnit,
-					ArgNumber:      argNumber,
-					District:       err.Error(),
-					UF:             err.Error(),
+					LawsuitCNJFormat: lawsuitNumber + "-" + verifyingDigit + "." + yearProtocol + "." + segment + "." + court + "." + sourceUnit,
+					LawsuitNumber:    lawsuitNumber,
+					VerifyingDigit:   verifyingDigit,
+					ProtocolYear:     yearProtocol,
+					Segment:          segment,
+					Court:            court,
+					SourceUnit:       sourceUnit,
+					ArgNumber:        argNumber,
+					District:         err.Error(),
+					UF:               err.Error(),
 				}, err
 			}
 		}
 
 		return DecomposedCNJ{
-			LawsuitNumber:  lawsuitNumber,
-			VerifyingDigit: verifyingDigit,
-			ProtocolYear:   yearProtocol,
-			Segment:        segment,
-			Court:          court,
-			SourceUnit:     sourceUnit,
-			ArgNumber:      argNumber,
-			District:       dt.District,
-			UF:             dt.UF,
+			LawsuitCNJFormat: lawsuitNumber + "-" + verifyingDigit + "." + yearProtocol + "." + segment + "." + court + "." + sourceUnit,
+			LawsuitNumber:    lawsuitNumber,
+			VerifyingDigit:   verifyingDigit,
+			ProtocolYear:     yearProtocol,
+			Segment:          segment,
+			Court:            court,
+			SourceUnit:       sourceUnit,
+			ArgNumber:        argNumber,
+			District:         dt.District,
+			UF:               dt.UF,
 		}, nil
 
 	}

@@ -22,6 +22,7 @@ type AnalysisCNJ struct {
 }
 
 //DecomposedCNJ returns the CNJ in decomposed manner:
+//	lawsuitCNJFormat [NNNNNNN]-[DD].[AAAA].[J].[CT].[0000]
 //  lawsuitNumber: [NNNNNNN]
 //  verifyingDigit: [DD]
 //  protocolYear: [AAAA]
@@ -32,15 +33,16 @@ type AnalysisCNJ struct {
 //  district: district where the lawsuit was proposed, frequently a city name
 //  uf: the uf of the correspondent district
 type DecomposedCNJ struct {
-	LawsuitNumber  string `json:"lawsuit_number,omitempty"`
-	VerifyingDigit string `json:"verifying_digit,omitempty"`
-	ProtocolYear   string `json:"protocol_year,omitempty"`
-	Segment        string `json:"segment,omitempty"`
-	Court          string `json:"court,omitempty"`
-	SourceUnit     string `json:"source_unit,omitempty"`
-	ArgNumber      string `json:"arg_number,omitempty"`
-	District       string `json:"district,omitempty"`
-	UF             string `json:"UF,omitempty"`
+	LawsuitCNJFormat string `json:"lawsuitCNJFormat,omitempty"`
+	LawsuitNumber    string `json:"lawsuit_number,omitempty"`
+	VerifyingDigit   string `json:"verifying_digit,omitempty"`
+	ProtocolYear     string `json:"protocol_year,omitempty"`
+	Segment          string `json:"segment,omitempty"`
+	Court            string `json:"court,omitempty"`
+	SourceUnit       string `json:"source_unit,omitempty"`
+	ArgNumber        string `json:"arg_number,omitempty"`
+	District         string `json:"district,omitempty"`
+	UF               string `json:"UF,omitempty"`
 }
 
 //AnalyzeCNJ returns the complex struct AnalysisCNJ containing all the useful data from this package
