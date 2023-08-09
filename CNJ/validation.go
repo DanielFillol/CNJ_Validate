@@ -17,7 +17,7 @@ func ValidateCNJ(cnj string) (bool, error) {
 		return false, err
 	}
 
-	vd, err := validVD(decomposedCNJ.ArgNumber)
+	vd, err := ValidVD(decomposedCNJ.ArgNumber)
 	if err != nil {
 		return false, err
 	}
@@ -29,8 +29,8 @@ func ValidateCNJ(cnj string) (bool, error) {
 	}
 }
 
-// validVD returns the verifyng digit from a given cnj using ArgNumber
-func validVD(argNumber string) (string, error) {
+// ValidVD returns the verifying digit from a given cnj using ArgNumber
+func ValidVD(argNumber string) (string, error) {
 	cnjInt, bl := new(big.Int).SetString(argNumber, 10)
 	if bl != true {
 		return "", errors.New("cant convert ArgNumber into big int")
