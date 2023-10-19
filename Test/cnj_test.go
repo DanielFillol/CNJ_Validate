@@ -1,8 +1,8 @@
 package Test
 
 import (
-	"github.com/Darklabel91/CNJ_Validate/CNJ"
-	"github.com/Darklabel91/CNJ_Validate/CNJCSV"
+	"github.com/DanielFillol/CNJ_Validate/CNJ"
+	"github.com/DanielFillol/CNJ_Validate/CNJCSV"
 	"reflect"
 	"testing"
 )

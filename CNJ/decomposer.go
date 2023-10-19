@@ -2,7 +2,7 @@ package CNJ
 
 import (
 	"errors"
-	"github.com/Darklabel91/CNJ_Validate/CNJDatabase"
+	"github.com/DanielFillol/CNJ_Validate/CNJDatabase"
 	"strings"
 )
 

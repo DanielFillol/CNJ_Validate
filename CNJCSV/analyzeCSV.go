@@ -2,11 +2,11 @@ package CNJCSV
 
 import (
 	"fmt"
-	"github.com/Darklabel91/CNJ_Validate/CNJ"
+	"github.com/DanielFillol/CNJ_Validate/CNJ"
 )
 
 // AnalyzeCNJCSV creates a csv with every single row with AnalyzeCNJ
-//from a given raw file and separator rune in a given folder
+// from a given raw file and separator rune in a given folder
 func AnalyzeCNJCSV(rawFilePath string, separator rune, nameResultFolder string) error {
 	raw, err := readCsvFile(rawFilePath, separator)
 	if err != nil {
@@ -22,7 +22,7 @@ func AnalyzeCNJCSV(rawFilePath string, separator rune, nameResultFolder string) 
 	return nil
 }
 
-//execute the AnalyzeCNJ from a []string
+// execute the AnalyzeCNJ from a []string
 func createCSVs(raw []string, nameResultFolder string) error {
 	var analyzeCNJCSV []CNJ.AnalysisCNJ
 

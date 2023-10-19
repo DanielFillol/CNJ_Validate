@@ -2,13 +2,13 @@ package CNJCSV
 
 import (
 	"encoding/csv"
-	"github.com/Darklabel91/CNJ_Validate/CNJ"
+	"github.com/DanielFillol/CNJ_Validate/CNJ"
 	"os"
 	"path/filepath"
 	"strconv"
 )
 
-//writeCSV exports a csv to a given folder, with a given name from a collection of AnalysisCNJ
+// writeCSV exports a csv to a given folder, with a given name from a collection of AnalysisCNJ
 func writeCSV(fileName string, folderName string, cnjRows []CNJ.AnalysisCNJ) error {
 	var rows [][]string
 
