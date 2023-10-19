@@ -9,15 +9,18 @@ import (
 const MATH = "00"
 
 // DecomposeCNJ decompose cnj format number into the specifics:
-//	lawsuitCNJFormat [NNNNNNN]-[DD].[AAAA].[J].[CT].[0000]
-//  LawsuitNumber = [NNNNNNN]
-//	VerifyingDigit = [DD]
-//	ProtocolYear = [AAAA]
-//	Segment [J]
-//	Court [TR]
-//	SourceUnit [OOOO]
-//	ArgNumber [LawsuitNumber + ProtocolYear + Segment + Court + SourceUnit + "00"]
-//  DistrictInfo [Name and UF of the city] it is a reading of J.TR.OOOO combination
+//
+//		lawsuitCNJFormat = [NNNNNNN]-[DD].[AAAA].[J].[CT].[0000]
+//	 	LawsuitNumber = [NNNNNNN]
+//		VerifyingDigit = [DD]
+//		ProtocolYear = [AAAA]
+//		Segment = [J]
+//		Court = [TR]
+//		SourceUnit [OOOO]
+//		ArgNumber = [LawsuitNumber + ProtocolYear + Segment + Court + SourceUnit + "00"]
+//		DistrictInfo = [Name and UF of the city] it is a reading of J.TR.OOOO combination
+//		UF = [UF]
+//		TJ = [{COURT}+{UF}]
 func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 	if len(cnj) > 25 && len(cnj) < 20 {
 		return DecomposedCNJ{}, errors.New("CNJ out of format, it must have 25 or 20 char")
@@ -40,6 +43,7 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 		semiCNJ := segment + "." + court + "." + sourceUnit
 
 		dt, err := CNJDatabase.FetchDistrict(semiCNJ)
+		sg, err := getSegment(segment)
 		if err != nil {
 			return DecomposedCNJ{
 				LawsuitCNJFormat: lawsuitNumber + "-" + verifyingDigit + "." + yearProtocol + "." + segment + "." + court + "." + sourceUnit,
@@ -52,6 +56,7 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 				ArgNumber:        argNumber,
 				District:         err.Error(),
 				UF:               err.Error(),
+				TJ:               err.Error(),
 			}, err
 		}
 
@@ -66,6 +71,7 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 			ArgNumber:        argNumber,
 			District:         dt.SourceUnit,
 			UF:               dt.UF,
+			TJ:               sg.Short,
 		}, nil
 	} else {
 		lawsuitNumber := cnj[0:7]
