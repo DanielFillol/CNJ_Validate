@@ -60,6 +60,13 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 			}, err
 		}
 
+		var tj string
+		if sg.Number == 1 || sg.Number == 2 || sg.Number == 3 || sg.Number == 7 {
+			tj = sg.Short
+		} else {
+			tj = sg.Short + dt.UF
+		}
+
 		return DecomposedCNJ{
 			LawsuitCNJFormat: lawsuitNumber + "-" + verifyingDigit + "." + yearProtocol + "." + segment + "." + court + "." + sourceUnit,
 			LawsuitNumber:    lawsuitNumber,
@@ -71,7 +78,7 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 			ArgNumber:        argNumber,
 			District:         dt.SourceUnit,
 			UF:               dt.UF,
-			TJ:               sg.Short,
+			TJ:               tj,
 		}, nil
 	} else {
 		lawsuitNumber := cnj[0:7]
@@ -93,6 +100,7 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 		semiCNJ := segment + "." + court + "." + sourceUnit
 
 		dt, err := CNJDatabase.FetchDistrict(semiCNJ)
+		sg, err := getSegment(segment)
 		if err != nil {
 			if err != nil {
 				return DecomposedCNJ{
@@ -106,8 +114,16 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 					ArgNumber:        argNumber,
 					District:         err.Error(),
 					UF:               err.Error(),
+					TJ:               err.Error(),
 				}, err
 			}
+		}
+
+		var tj string
+		if sg.Number == 1 || sg.Number == 2 || sg.Number == 3 || sg.Number == 7 {
+			tj = sg.Short
+		} else {
+			tj = sg.Short + dt.UF
 		}
 
 		return DecomposedCNJ{
@@ -121,6 +137,7 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 			ArgNumber:        argNumber,
 			District:         dt.District,
 			UF:               dt.UF,
+			TJ:               tj,
 		}, nil
 
 	}
