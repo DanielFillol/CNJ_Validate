@@ -31,6 +31,7 @@ type DecomposedCNJ struct {
 	ArgNumber      	 string `json:"arg_number,omitempty"`
 	District       	 string `json:"district,omitempty"`
 	UF             	 string `json:"UF,omitempty"`
+	TJ               string `json:"TJ,omitempty"`
 }
 ```
 ### AnalysisCNJ
@@ -55,6 +56,7 @@ type DecomposedCNJ struct {
 - ArgNumber:NNNNNNNAAAAJCT0000 + 00 [00013272018826015800] (need for caculate *VerifyingDigit*)
 - District: location where the lawsuit began (city, electoral district, labor district)[São Paulo]
 - UF: The state short name where the lawsuit began [SP]
+- TJ: The court type shortname [TJ]
 
 
 ## Example
