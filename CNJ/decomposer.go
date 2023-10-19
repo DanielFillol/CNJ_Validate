@@ -3,6 +3,7 @@ package CNJ
 import (
 	"errors"
 	"github.com/DanielFillol/CNJ_Validate/CNJDatabase"
+	"strconv"
 	"strings"
 )
 
@@ -62,7 +63,23 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 
 		var tj string
 		if sg.Number == 1 || sg.Number == 2 || sg.Number == 3 || sg.Number == 7 {
-			tj = sg.Short
+			courtNumber, err := strconv.Atoi(court)
+			if err != nil {
+				return DecomposedCNJ{
+					LawsuitCNJFormat: lawsuitNumber + "-" + verifyingDigit + "." + yearProtocol + "." + segment + "." + court + "." + sourceUnit,
+					LawsuitNumber:    lawsuitNumber,
+					VerifyingDigit:   verifyingDigit,
+					ProtocolYear:     yearProtocol,
+					Segment:          segment,
+					Court:            court,
+					SourceUnit:       sourceUnit,
+					ArgNumber:        argNumber,
+					District:         err.Error(),
+					UF:               err.Error(),
+					TJ:               err.Error(),
+				}, err
+			}
+			tj = sg.Short + strconv.Itoa(courtNumber)
 		} else {
 			tj = sg.Short + dt.UF
 		}
