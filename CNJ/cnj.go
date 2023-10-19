@@ -2,13 +2,14 @@ package CNJ
 
 import "errors"
 
-//AnalysisCNJ returns:
-// 	receivedCNJ
-// 	validCNJ given by ValidateCNJ
-// 	segmentName and segmentShort given by getSegment
-// 	sourceUnitType and SourceUnitNumber given by getSourceUnit
-// 	courtType and courtNumber given by getOriginCourt
-// 	detailed is a struct on it's on given by DecomposeCNJ
+// AnalysisCNJ returns:
+//
+//	receivedCNJ
+//	validCNJ given by ValidateCNJ
+//	segmentName and segmentShort given by getSegment
+//	sourceUnitType and SourceUnitNumber given by getSourceUnit
+//	courtType and courtNumber given by getOriginCourt
+//	detailed is a struct on it's on given by DecomposeCNJ
 type AnalysisCNJ struct {
 	ReceivedCNJ      string        `json:"received_cnj,omitempty"`
 	ValidCNJ         bool          `json:"valid_cnj,omitempty"`
@@ -21,17 +22,19 @@ type AnalysisCNJ struct {
 	Detailed         DecomposedCNJ `json:"Detailed"`
 }
 
-//DecomposedCNJ returns the CNJ in decomposed manner:
+// DecomposedCNJ returns the CNJ in decomposed manner:
+//
 //	lawsuitCNJFormat [NNNNNNN]-[DD].[AAAA].[J].[CT].[0000]
-//  lawsuitNumber: [NNNNNNN]
-//  verifyingDigit: [DD]
-//  protocolYear: [AAAA]
-//  segment: [J]
-//  court: [CT]
-//  sourceUnit: [0000]
-//  argNumber: [NNNNNNNAAAAJCT0000] + "00"
-//  district: district where the lawsuit was proposed, frequently a city name
-//  uf: the uf of the correspondent district
+//	 lawsuitNumber: [NNNNNNN]
+//	 verifyingDigit: [DD]
+//	 protocolYear: [AAAA]
+//	 segment: [J]
+//	 court: [CT]
+//	 sourceUnit: [0000]
+//	 argNumber: [NNNNNNNAAAAJCT0000] + "00"
+//	 district: district where the lawsuit was proposed, frequently a city name
+//	 uf: the uf of the correspondent district
+//	 tj: the court shortname [TJ/STJ/TRF..]
 type DecomposedCNJ struct {
 	LawsuitCNJFormat string `json:"lawsuitCNJFormat,omitempty"`
 	LawsuitNumber    string `json:"lawsuit_number,omitempty"`
@@ -43,9 +46,10 @@ type DecomposedCNJ struct {
 	ArgNumber        string `json:"arg_number,omitempty"`
 	District         string `json:"district,omitempty"`
 	UF               string `json:"UF,omitempty"`
+	TJ               string `json:"TJ,omitempty"`
 }
 
-//AnalyzeCNJ returns the complex struct AnalysisCNJ containing all the useful data from this package
+// AnalyzeCNJ returns the complex struct AnalysisCNJ containing all the useful data from this package
 func AnalyzeCNJ(cnj string) (AnalysisCNJ, error) {
 	decomposedCNJ, err := DecomposeCNJ(cnj)
 	if err != nil {
@@ -86,7 +90,7 @@ func AnalyzeCNJ(cnj string) (AnalysisCNJ, error) {
 
 }
 
-//WriteCNJ returns a single string with all organized interpretation of CNJ information
+// WriteCNJ returns a single string with all organized interpretation of CNJ information
 func WriteCNJ(number AnalysisCNJ) (string, error) {
 
 	if number.Detailed.LawsuitNumber == "" {
