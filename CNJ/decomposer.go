@@ -62,7 +62,7 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 		}
 
 		var tj string
-		if sg.Number == 1 || sg.Number == 2 || sg.Number == 3 || sg.Number == 7 {
+		if sg.Number == 1 || sg.Number == 2 || sg.Number == 3 || sg.Number == 4 || sg.Number == 7 {
 			courtNumber, err := strconv.Atoi(court)
 			if err != nil {
 				return DecomposedCNJ{
@@ -137,7 +137,7 @@ func DecomposeCNJ(cnj string) (DecomposedCNJ, error) {
 		}
 
 		var tj string
-		if sg.Number == 1 || sg.Number == 2 || sg.Number == 3 || sg.Number == 7 {
+		if sg.Number == 1 || sg.Number == 2 || sg.Number == 3 || sg.Number == 4 || sg.Number == 7 {
 			courtNumber, err := strconv.Atoi(court)
 			if err != nil {
 				return DecomposedCNJ{
